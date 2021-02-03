@@ -8,8 +8,11 @@ class MetadataReader:
 
     @staticmethod
     def __read_data(path):
-        with open(path, 'r') as my_csv:
-            return [interview for interview in DictReader(my_csv, delimiter="|", quotechar="%")]
+        with open(path, "r") as my_csv:
+            return [
+                interview
+                for interview in DictReader(my_csv, delimiter="|", quotechar="%")
+            ]
 
 
 if __name__ == "__main__":
