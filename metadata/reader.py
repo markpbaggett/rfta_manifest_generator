@@ -16,25 +16,27 @@ class MetadataReader:
             ]
 
     def __clean_interviews(self):
-        return [Interview(interview).metadata for interview in self.original_interviews]
+        return [
+            Interview(interview).metadata_v3 for interview in self.original_interviews
+        ]
 
 
 class Interview:
     def __init__(self, interview):
         self.csv_data = interview
-        self.metadata = self.__generate_interview()
+        self.metadata_v3 = self.__generate_interview()
 
     def get_interview_label(self):
-        """Use Title to generate a label for the Manifest."""
-        return self.csv_data["Title"]
+        """Use Title to generate a label for the manifest according to the IIIF v3 specification"""
+        return {"label": {"en": [self.csv_data["Title"]]}}
 
     def get_rights(self):
-        """Use License to generate rights for the Manifest."""
-        return self.csv_data["License"]
+        """Use License to generate rights according to the IIIF v3 specification"""
+        return {"rights": self.csv_data["License"]}
 
     def get_summary(self):
-        """Use Abstract to generate a summary for the manifest."""
-        return self.csv_data["Abstract"]
+        """Use Abstract to generate a summary according to the IIIF v3 specification."""
+        return {"summary": {"en": [self.csv_data["Abstract"]]}}
 
     def __generate_interview(self):
         return {
