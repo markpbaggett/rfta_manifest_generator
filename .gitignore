@@ -1,3 +1,4 @@
 .idea/*
 data/metadata.xlsx
 metadata/__pycache__/
+tests/__pycache__/
