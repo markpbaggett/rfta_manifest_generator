@@ -38,11 +38,25 @@ class Interview:
         """Use Abstract to generate a summary according to the IIIF v3 specification."""
         return {"summary": {"en": [self.csv_data["Abstract"]]}}
 
+    def get_narrators(self):
+        """Use values in narrator fields to get narrators to metadata section of a IIIF v3 metadata profile"""
+        narrators = [
+            narrator
+            for narrator in [
+                self.csv_data["Narrator Name"],
+                self.csv_data["Narrator Name 2"],
+                self.csv_data["Narrator Name 3"],
+            ]
+            if narrator != ""
+        ]
+        return {"label": {"en": ["Narrator"]}, "value": {"en": narrators}}
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
             "rights": self.get_rights(),
             "summary": self.get_summary(),
+            "narrators": self.get_narrators(),
         }
 
 
