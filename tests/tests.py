@@ -20,9 +20,13 @@ class CheckDescriptiveMetadata(unittest.TestCase):
 
 class TestDescriptiveMetadata(unittest.TestCase):
     def test_narrator(self):
-        CheckDescriptiveMetadata(Interview(interview_data).get_narrators()).check_label()
-        CheckDescriptiveMetadata(Interview(interview_data).get_narrators()).check_value()
-        
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_narrators()
+        ).check_label()
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_narrators()
+        ).check_value()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
