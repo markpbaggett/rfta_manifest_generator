@@ -51,12 +51,24 @@ class Interview:
         ]
         return {"label": {"en": ["Narrator"]}, "value": {"en": narrators}}
 
+    def get_interviewer(self):
+        """Use value in interviewer field to get interviewers for metadata section of a IIIF v3 metadata profile"""
+        interviewers = [
+            interviewer
+            for interviewer in [
+                self.csv_data["Interviewer Name"],
+            ]
+            if interviewer != ""
+        ]
+        return {"label": {"en": ["Narrator"]}, "value": {"en": interviewers}}
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
             "rights": self.get_rights(),
             "summary": self.get_summary(),
             "narrators": self.get_narrators(),
+            "interviewer": self.get_interviewer(),
         }
 
 
