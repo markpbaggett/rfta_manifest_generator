@@ -74,6 +74,20 @@ class Interview:
         except arrow.parser.ParserMatchError:
             return ""
 
+    def get_interviewer_location(self):
+        """Get location of interviewer for manifest"""
+        return {
+            "label": {"en": ["Location Recorded"]},
+            "value": {"en": [self.csv_data["Location Recorded"]]},
+        }
+
+    def get_narrator_location(self):
+        """Get location of narrator for manifest"""
+        return {
+            "label": {"en": ["Narrator Location Recorded"]},
+            "value": {"en": [self.csv_data["Narrator Location Recorded"]]},
+        }
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
@@ -82,6 +96,8 @@ class Interview:
             "narrators": self.get_narrators(),
             "interviewer": self.get_interviewer(),
             "navDate": self.get_navigation_date(),
+            "interviewer_location": self.get_interviewer_location(),
+            "narrator_location": self.get_narrator_location(),
         }
 
 

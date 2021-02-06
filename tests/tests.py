@@ -35,6 +35,22 @@ class TestDescriptiveMetadata(unittest.TestCase):
             Interview(interview_data).get_interviewer()
         ).check_value()
 
+    def test_interviewer_location(self):
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_interviewer_location()
+        ).check_label()
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_interviewer_location()
+        ).check_value()
+
+    def test_narrator_location(self):
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_narrator_location()
+        ).check_label()
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_narrator_location()
+        ).check_value()
+
 
 if __name__ == "__main__":
     unittest.main()
