@@ -1,4 +1,5 @@
 from csv import DictReader
+import arrow
 
 
 class MetadataReader:
@@ -62,6 +63,17 @@ class Interview:
         ]
         return {"label": {"en": ["Narrator"]}, "value": {"en": interviewers}}
 
+    def get_navigation_date(self):
+        """Use date recorded as navDate for manifest"""
+        try:
+            split_date = self.csv_data["Date Recorded"].split("/")
+            for i, unit in enumerate(split_date):
+                if len(unit) == 1:
+                    split_date[i] = f"0{unit}"
+            return f"{str(arrow.get('/'.join(split_date), 'MM/DD/YYYY').format('YYYY-MM-DD'))}T00:00:00Z"
+        except arrow.parser.ParserMatchError:
+            return ""
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
@@ -69,6 +81,7 @@ class Interview:
             "summary": self.get_summary(),
             "narrators": self.get_narrators(),
             "interviewer": self.get_interviewer(),
+            "navDate": self.get_navigation_date(),
         }
 
 
