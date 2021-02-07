@@ -88,6 +88,19 @@ class Interview:
             "value": {"en": [self.csv_data["Narrator Location Recorded"]]},
         }
 
+    def get_aat_format(self):
+        """Process AAT Format column to get format for manifest"""
+        return {
+            "label": {"en": ["AAT Format "]},
+            "value": {
+                "en": [
+                    self.csv_data["AAT Format "]
+                    .split("http://vocab.getty.edu/aat/")[0]
+                    .rstrip()
+                ]
+            },
+        }
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
@@ -98,6 +111,7 @@ class Interview:
             "navDate": self.get_navigation_date(),
             "interviewer_location": self.get_interviewer_location(),
             "narrator_location": self.get_narrator_location(),
+            "aat_format": self.get_aat_format(),
         }
 
 

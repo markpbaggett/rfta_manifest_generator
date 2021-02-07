@@ -51,6 +51,14 @@ class TestDescriptiveMetadata(unittest.TestCase):
             Interview(interview_data).get_narrator_location()
         ).check_value()
 
+    def test_aat_format(self):
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_aat_format()
+        ).check_label()
+        CheckDescriptiveMetadata(
+            Interview(interview_data).get_aat_format()
+        ).check_value()
+
 
 if __name__ == "__main__":
     unittest.main()
