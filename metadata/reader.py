@@ -91,7 +91,7 @@ class Interview:
     def get_aat_format(self):
         """Process AAT Format column to get format for manifest"""
         return {
-            "label": {"en": ["AAT Format "]},
+            "label": {"en": ["AAT Format"]},
             "value": {
                 "en": [
                     self.csv_data["AAT Format "]
