@@ -17,7 +17,9 @@ class SRTConverter:
     def convert_files_to_vtt(self):
         for path, directories, files in os.walk(self.srt_path):
             for file in files:
-                webvtt.from_srt(f"{path}/{file}").save(f"{self.vtt_path}{file.replace('srt', 'vtt')}")
+                webvtt.from_srt(f"{path}/{file}").save(
+                    f"{self.vtt_path}{file.replace('srt', 'vtt')}"
+                )
 
 
 if __name__ == "__main__":
