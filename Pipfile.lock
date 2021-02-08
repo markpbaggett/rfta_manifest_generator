@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "116260db913f0dee77e6ce69854228d9bb4e0e92332b0ab4ef716d9369948e7f"
+            "sha256": "d38127921f7ad3180676bbb7bf9882b030a37cf6e0265e83fec1d27971140bf6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -24,6 +24,12 @@
             "index": "pypi",
             "version": "==0.17.0"
         },
+        "docopt": {
+            "hashes": [
+                "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"
+            ],
+            "version": "==0.6.2"
+        },
         "python-dateutil": {
             "hashes": [
                 "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c",
@@ -37,6 +43,13 @@
                 "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"
             ],
             "version": "==1.15.0"
+        },
+        "webvtt-py": {
+            "hashes": [
+                "sha256:5cf9da2a8c34bc789db599377be87b228b7e4734c629597edd27a8054e004a57"
+            ],
+            "index": "pypi",
+            "version": "==0.4.6"
         }
     },
     "develop": {

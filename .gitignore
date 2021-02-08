@@ -2,3 +2,4 @@
 data/metadata.xlsx
 metadata/__pycache__/
 tests/__pycache__/
+data/web_vtt_files/*
