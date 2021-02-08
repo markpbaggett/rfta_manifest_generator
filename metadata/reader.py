@@ -78,7 +78,7 @@ class Interview:
         """Get location of interviewer for manifest"""
         return {
             "label": {"en": ["Location Recorded"]},
-            "value": {"en": [self.csv_data["Location Recorded"]]},
+            "value": {"en": [self.csv_data["Location Recorded"].split('\n')[0]]},
         }
 
     def get_narrator_location(self):
