@@ -18,6 +18,7 @@ class CheckDescriptiveMetadata(unittest.TestCase):
         self.assertIsInstance(self.metadata_element["value"]["en"], list)
         for value in self.metadata_element["value"]["en"]:
             self.assertNotIn("https://www.geonames.org/", value)
+            self.assertNotIn("http://vocab.getty.edu/aat/", value)
 
 
 class TestDescriptiveMetadata(unittest.TestCase):
