@@ -16,9 +16,8 @@ class CheckDescriptiveMetadata(unittest.TestCase):
         self.assertIn("value", self.metadata_element)
         self.assertIn("en", self.metadata_element["value"])
         self.assertIsInstance(self.metadata_element["value"]["en"], list)
-
-    def check_geonames_uri_is_not_present(self):
-        self.assertNotIn("https://www.geonames.org/", self.metadata_element["value"]["en"][0])
+        for value in self.metadata_element["value"]["en"]:
+            self.assertNotIn("https://www.geonames.org/", value)
 
 
 class TestDescriptiveMetadata(unittest.TestCase):
@@ -48,9 +47,6 @@ class TestDescriptiveMetadata(unittest.TestCase):
             CheckDescriptiveMetadata(
                 Interview(interview).get_interviewer_location()
             ).check_value()
-            CheckDescriptiveMetadata(
-                Interview(interview).get_interviewer_location()
-            ).check_geonames_uri_is_not_present()
 
     def test_narrator_location(self):
         for interview in interview_data:
@@ -60,9 +56,6 @@ class TestDescriptiveMetadata(unittest.TestCase):
             CheckDescriptiveMetadata(
                 Interview(interview).get_narrator_location()
             ).check_value()
-            CheckDescriptiveMetadata(
-                Interview(interview).get_narrator_location()
-            ).check_geonames_uri_is_not_present()
 
     def test_aat_format(self):
         for interview in interview_data:
