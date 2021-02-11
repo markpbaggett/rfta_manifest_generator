@@ -73,6 +73,11 @@ class TestDescriptiveMetadata(unittest.TestCase):
             CheckDescriptiveMetadata(Interview(interview).get_places()).check_label()
             CheckDescriptiveMetadata(Interview(interview).get_places()).check_value()
 
+    def test_names(self):
+        for interview in interview_data:
+            CheckDescriptiveMetadata(Interview(interview).get_names()).check_label()
+            CheckDescriptiveMetadata(Interview(interview).get_names()).check_value()
+
 
 if __name__ == "__main__":
     unittest.main()

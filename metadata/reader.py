@@ -102,7 +102,7 @@ class Interview:
         }
 
     def get_topics(self):
-        """Use values in topic fields to get narrators to metadata section of a IIIF v3 metadata profile"""
+        """Use values in topic fields to get topics to metadata section of a IIIF v3 metadata profile"""
         topics = [
             topic
             for topic in [
@@ -115,7 +115,7 @@ class Interview:
         return {"label": {"en": ["Topics"]}, "value": {"en": topics}}
 
     def get_places(self):
-        """Use values in geographic subject fields to get narrators to metadata section of a IIIF v3 metadata profile"""
+        """Use values in geographic subject fields to get places to metadata section of a IIIF v3 metadata profile"""
         places = [
             place
             for place in [
@@ -125,6 +125,18 @@ class Interview:
             if place != ""
         ]
         return {"label": {"en": ["Places"]}, "value": {"en": places}}
+
+    def get_names(self):
+        """Use values in name subject fields to get names to metadata section of a IIIF v3 metadata profile"""
+        names = [
+            name
+            for name in [
+                self.csv_data["LCSH_Name_1"],
+                self.csv_data["LCSH_Name_2"],
+            ]
+            if name != ""
+        ]
+        return {"label": {"en": ["Subject Names"]}, "value": {"en": names}}
 
     def __generate_interview(self):
         return {
@@ -139,6 +151,7 @@ class Interview:
             "aat_format": self.get_aat_format(),
             "topics": self.get_topics(),
             "places": self.get_places(),
+            "names": self.get_names(),
         }
 
 
