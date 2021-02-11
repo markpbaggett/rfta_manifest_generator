@@ -24,12 +24,8 @@ class CheckDescriptiveMetadata(unittest.TestCase):
 class TestDescriptiveMetadata(unittest.TestCase):
     def test_narrator(self):
         for interview in interview_data:
-            CheckDescriptiveMetadata(
-                Interview(interview).get_narrators()
-            ).check_label()
-            CheckDescriptiveMetadata(
-                Interview(interview).get_narrators()
-            ).check_value()
+            CheckDescriptiveMetadata(Interview(interview).get_narrators()).check_label()
+            CheckDescriptiveMetadata(Interview(interview).get_narrators()).check_value()
 
     def test_interviewer(self):
         for interview in interview_data:
@@ -66,6 +62,11 @@ class TestDescriptiveMetadata(unittest.TestCase):
             CheckDescriptiveMetadata(
                 Interview(interview).get_aat_format()
             ).check_value()
+
+    def test_topics(self):
+        for interview in interview_data:
+            CheckDescriptiveMetadata(Interview(interview).get_topics()).check_label()
+            CheckDescriptiveMetadata(Interview(interview).get_topics()).check_value()
 
 
 if __name__ == "__main__":

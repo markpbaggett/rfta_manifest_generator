@@ -78,7 +78,7 @@ class Interview:
         """Get location of interviewer for manifest"""
         return {
             "label": {"en": ["Location Recorded"]},
-            "value": {"en": [self.csv_data["Location Recorded"].split('\n')[0]]},
+            "value": {"en": [self.csv_data["Location Recorded"].split("\n")[0]]},
         }
 
     def get_narrator_location(self):
@@ -101,6 +101,19 @@ class Interview:
             },
         }
 
+    def get_topics(self):
+        """Use values in topic fields to get narrators to metadata section of a IIIF v3 metadata profile"""
+        topics = [
+            topic
+            for topic in [
+                self.csv_data["LCSH_Topic_1"],
+                self.csv_data["LCSH_Topic_2"],
+                self.csv_data["LCSH_Topic_3"],
+            ]
+            if topic != ""
+        ]
+        return {"label": {"en": ["Topics"]}, "value": {"en": topics}}
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
@@ -112,8 +125,9 @@ class Interview:
             "interviewer_location": self.get_interviewer_location(),
             "narrator_location": self.get_narrator_location(),
             "aat_format": self.get_aat_format(),
+            "topics": self.get_topics(),
         }
 
 
 if __name__ == "__main__":
-    print(MetadataReader("data/metadata.csv").interviews)
+    print(MetadataReader("data/metadata.csv").interviews[1])
