@@ -114,6 +114,18 @@ class Interview:
         ]
         return {"label": {"en": ["Topics"]}, "value": {"en": topics}}
 
+    def get_places(self):
+        """Use values in geographic subject fields to get narrators to metadata section of a IIIF v3 metadata profile"""
+        places = [
+            place
+            for place in [
+                self.csv_data["LCSH_Geo_1"],
+                self.csv_data["LCSH_Geo_2"],
+            ]
+            if place != ""
+        ]
+        return {"label": {"en": ["Places"]}, "value": {"en": places}}
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
@@ -126,6 +138,7 @@ class Interview:
             "narrator_location": self.get_narrator_location(),
             "aat_format": self.get_aat_format(),
             "topics": self.get_topics(),
+            "places": self.get_places(),
         }
 
 
