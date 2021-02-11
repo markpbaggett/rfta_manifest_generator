@@ -1,5 +1,6 @@
 from csv import DictReader
 import arrow
+from uuid import uuid4
 
 
 class MetadataReader:
@@ -50,7 +51,7 @@ class Interview:
             ]
             if narrator != ""
         ]
-        return {"label": {"en": ["Narrator"]}, "value": {"en": narrators}}
+        return {"label": {"en": ["Narrators"]}, "value": {"en": narrators}}
 
     def get_interviewer(self):
         """Use value in interviewer field to get interviewers for metadata section of a IIIF v3 metadata profile"""
@@ -61,7 +62,7 @@ class Interview:
             ]
             if interviewer != ""
         ]
-        return {"label": {"en": ["Narrator"]}, "value": {"en": interviewers}}
+        return {"label": {"en": ["Interviewers"]}, "value": {"en": interviewers}}
 
     def get_navigation_date(self):
         """Use date recorded as navDate for manifest"""
@@ -138,6 +139,34 @@ class Interview:
         ]
         return {"label": {"en": ["Subject Names"]}, "value": {"en": names}}
 
+    def get_interview_questions(self):
+        """Build interview questions from CSV metadata."""
+        canvas_id = (
+            "https://digital.lib.utk.edu/collections/islandora/PID/datastream/PROXY"
+        )
+        keys = [
+            key
+            for key, value in self.csv_data.items()
+            if key.startswith("Interview_Question_") and "TC" not in key
+        ]
+        interview_questions = [
+            (self.csv_data[key], self.csv_data[f"{key}_TC"])
+            for key in keys
+            if self.csv_data[key].rstrip() != ""
+        ]
+        if len(interview_questions) > 0:
+            return {
+                "type": "Range",
+                "id": canvas_id,
+                "label": {"en": ["Interview Questions"]},
+                "items": [
+                    MediaFragment(question, canvas_id).build_range()
+                    for question in interview_questions
+                ],
+            }
+        else:
+            return {}
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
@@ -152,6 +181,23 @@ class Interview:
             "topics": self.get_topics(),
             "places": self.get_places(),
             "names": self.get_names(),
+            "interview question": self.get_interview_questions(),
+        }
+
+
+class MediaFragment:
+    def __init__(self, range_metadata, canvas_id):
+        self.range_id = uuid4()
+        self.range_metadata = range_metadata
+        self.canvas_id = canvas_id
+
+    def build_range(self):
+        """@todo: work on canvas id and media fragment."""
+        return {
+            "type": "Range",
+            "id": f"http://{self.range_id}",
+            "label": {"en": [self.range_metadata[0].rstrip()]},
+            "items": [{"type": "Canvas", "id": f"{self.canvas_id}#t=66,115"}],
         }
 
 
