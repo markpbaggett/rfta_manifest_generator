@@ -215,19 +215,29 @@ class Interview:
 
 
 class MediaFragment:
-    def __init__(self, range_metadata, canvas_id):
+    def __init__(self, label, canvas_id, start, end):
         self.range_id = uuid4()
-        self.range_metadata = range_metadata
+        self.label = label
         self.canvas_id = canvas_id
+        self.start = self.__get_duration(start)
+        self.end = self.__get_duration(end)
 
     def build_range(self):
         """@todo: work on canvas id and media fragment."""
         return {
             "type": "Range",
             "id": f"http://{self.range_id}",
-            "label": {"en": [self.range_metadata[0].rstrip()]},
-            "items": [{"type": "Canvas", "id": f"{self.canvas_id}#t=66,115"}],
+            "label": {"en": [self.label.rstrip()]},
+            "items": [{"type": "Canvas", "id": f"{self.canvas_id}#t={self.start},{self.end}"}],
         }
+
+    @staticmethod
+    def __get_duration(timestamp):
+        duration_split = timestamp.split(":")
+        print(duration_split)
+        hours = int(duration_split[0]) * 60 * 60
+        minutes = int(duration_split[1]) * 60
+        return hours + minutes + int(duration_split[2])
 
 
 if __name__ == "__main__":
