@@ -12,13 +12,19 @@ type: Manifest
 
 label:
   en:
-    - "[Title (Interview with [Name], [Date])]"
+    - "[Title (Interview with [Name], [Date])]" # Handled in Interview().get_interview_label()
 
-rights: "[License]"
+rights: "[License]" # Handled in Interview().get_rights()
 
 summary:
   en:
-    - "[Abstract]"
+    - "[Abstract]" # Handled in Interview().get_summary()
+
+# A date that clients may use for navigation purposes when presenting the resource to the user in a date-based user
+# interface, such as a calendar or timeline. More descriptive date ranges, intended for display directly to the user,
+# should be included in the metadata property for human consumption.
+# The value must be an XSD dateTime literal.
+navDate: "[Date Recorded]" # Handled in Interview().get_navigation_date() including xsd conversion
 
 metadata:
   - label:
@@ -26,22 +32,46 @@ metadata:
       - "Narrators"
     value:
       en:
-      - "[Narrator Name #]"
+      - "[Narrator Name #]" # Handled in Interview().get_narrators()
   - label:
       en:
       - "Interviewers"
     value:
       en:
-      - "[Interviewer Name]"
+      - "[Interviewer Name]" # Handled in Interview().get_interviewer()
   - label:
       en:
       - "Location Recorded"
     value:
       en:
-      - "[Location Recorded]"
+      - "[Location Recorded]" # Handled in Interview().get_interviewer_location()
   - label:
       en:
       - "Narrator Location Recorded"
     value:
       en:
-      - "[Narrator Location Recorded]"
+      - "[Narrator Location Recorded]" # Handled in Interview().get_narrator_location()
+  - label:
+      en:
+        - "AAT Format"
+      value:
+        en:
+          - "[AAT Format ]" # Handled in Interview().get_aat_format()
+  - label:
+      en:
+        - "Topics"
+      value:
+        en:
+          - "[LCSH_Topic_#]" # Handled in Interview().get_topics()
+  - label:
+      en:
+        - "Places"
+      value:
+        en:
+          - "[LCSH_Geo_#]" # Handled in Interview().get_places()
+  - label:
+      en:
+        - "Subject Names"
+      value:
+        en:
+          - "[LCSH_Name_#]" # Handled in Interview().get_names()
