@@ -1,21 +1,23 @@
 # This metadata mapping follows the IIIF Presentation v.3 specification.  It is written in YAML rather than a
 # spreadsheet for ease of conversion and so that there are no suprises between the developers and metadata librarians.
 
+# Section 1: Metadata about the Manifest (@context, id, type)
 
 # The top level resource in the response must have the @context property, and it should appear as the very first
 # key/value pair of the JSON representation. This tells Linked Data processors how to interpret the document. The value
 # of the @context property must be either the URI http://iiif.io/api/presentation/3/context.json or a JSON array with
 # the URI http://iiif.io/api/presentation/3/context.json as the last item.
 "@context": http://iiif.io/api/presentation/3/context.json
+# The URI that identifies the manifest. The identifier in id must be able to be dereferenced to retrieve the JSON
+# description of the Manifest, and thus must use the HTTP(S) URI scheme.
 id: https://Unique-URI-Preferably-to-Location-Of-Manifest
+# The type or class of the resource.
 type: Manifest
 
+# Section 2: Descriptive Metadata about the Object or Work
 label:
   en:
     - "[Title (Interview with [Name], [Date])]" # Handled in Interview().get_interview_label()
-
-rights: "[License]" # Handled in Interview().get_rights()
-
 summary:
   en:
     - "[Abstract]" # Handled in Interview().get_summary()
@@ -25,7 +27,6 @@ summary:
 # should be included in the metadata property for human consumption.
 # The value must be an XSD dateTime literal.
 navDate: "[Date Recorded]" # Handled in Interview().get_navigation_date() including xsd conversion
-
 metadata:
   - label:
       en:
@@ -75,3 +76,6 @@ metadata:
       value:
         en:
           - "[LCSH_Name_#]" # Handled in Interview().get_names()
+
+# Section 3: Rights Information
+rights: "[License]" # Handled in Interview().get_rights()
