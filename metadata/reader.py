@@ -139,6 +139,12 @@ class Interview:
         ]
         return {"label": {"en": ["Subject Names"]}, "value": {"en": names}}
 
+    def __get_duration_pair(self, next_value):
+        if next_value.rstrip() == "":
+            return self.csv_data["Interview Stop TC"]
+        else:
+            return next_value
+
     def get_interview_questions(self):
         """Build interview questions from CSV metadata."""
         canvas_id = (
@@ -150,7 +156,15 @@ class Interview:
             if key.startswith("Interview_Question_") and "TC" not in key
         ]
         interview_questions = [
-            (self.csv_data[key], self.csv_data[f"{key}_TC"])
+            (
+                self.csv_data[key],
+                self.csv_data[f"{key}_TC"],
+                self.__get_duration_pair(
+                    self.csv_data[
+                        f"{key.replace(key.split('_')[2],str(int(key.split('_')[2])+1))}_TC"
+                    ]
+                ),
+            )
             for key in keys
             if self.csv_data[key].rstrip() != ""
         ]
@@ -160,40 +174,42 @@ class Interview:
                 "id": canvas_id,
                 "label": {"en": ["Interview Questions"]},
                 "items": [
-                    MediaFragment(question, canvas_id).build_range()
+                    MediaFragment(
+                        question[0], canvas_id, question[1], question[2]
+                    ).build_range()
                     for question in interview_questions
                 ],
             }
         else:
             return {}
 
-    def get_chapters(self):
-        """Build chapters from CSV metadata."""
-        canvas_id = (
-            "https://digital.lib.utk.edu/collections/islandora/PID/datastream/PROXY"
-        )
-        keys = [
-            key
-            for key, value in self.csv_data.items()
-            if key.startswith("Chapter_") and "TC" not in key
-        ]
-        chapters = [
-            (self.csv_data[key], self.csv_data[f"{key}_TC"])
-            for key in keys
-            if self.csv_data[key].rstrip() != ""
-        ]
-        if len(chapters) > 0:
-            return {
-                "type": "Range",
-                "id": canvas_id,
-                "label": {"en": ["Chapters"]},
-                "items": [
-                    MediaFragment(chapter, canvas_id).build_range()
-                    for chapter in chapters
-                ],
-            }
-        else:
-            return {}
+    # def get_chapters(self):
+    #     """Build chapters from CSV metadata."""
+    #     canvas_id = (
+    #         "https://digital.lib.utk.edu/collections/islandora/PID/datastream/PROXY"
+    #     )
+    #     keys = [
+    #         key
+    #         for key, value in self.csv_data.items()
+    #         if key.startswith("Chapter_") and "TC" not in key
+    #     ]
+    #     chapters = [
+    #         (self.csv_data[key], self.csv_data[f"{key}_TC"])
+    #         for key in keys
+    #         if self.csv_data[key].rstrip() != ""
+    #     ]
+    #     if len(chapters) > 0:
+    #         return {
+    #             "type": "Range",
+    #             "id": canvas_id,
+    #             "label": {"en": ["Chapters"]},
+    #             "items": [
+    #                 MediaFragment(chapter, canvas_id).build_range()
+    #                 for chapter in chapters
+    #             ],
+    #         }
+    #     else:
+    #         return {}
 
     def __generate_interview(self):
         return {
@@ -210,7 +226,7 @@ class Interview:
             "places": self.get_places(),
             "names": self.get_names(),
             "interview question": self.get_interview_questions(),
-            "chapters": self.get_chapters(),
+            # "chapters": self.get_chapters(),
         }
 
 
@@ -219,22 +235,25 @@ class MediaFragment:
         self.range_id = uuid4()
         self.label = label
         self.canvas_id = canvas_id
-        self.start = self.__get_duration(start)
-        self.end = self.__get_duration(end)
+        print(f"Start: {start}")
+        print(f"End: {end}")
+        print(self.label)
+        self.start = self.__get_duration(start.replace("~", ""))
+        self.end = self.__get_duration(end.replace("~", ""))
 
     def build_range(self):
-        """@todo: work on canvas id and media fragment."""
         return {
             "type": "Range",
             "id": f"http://{self.range_id}",
             "label": {"en": [self.label.rstrip()]},
-            "items": [{"type": "Canvas", "id": f"{self.canvas_id}#t={self.start},{self.end}"}],
+            "items": [
+                {"type": "Canvas", "id": f"{self.canvas_id}#t={self.start},{self.end}"}
+            ],
         }
 
     @staticmethod
     def __get_duration(timestamp):
         duration_split = timestamp.split(":")
-        print(duration_split)
         hours = int(duration_split[0]) * 60 * 60
         minutes = int(duration_split[1]) * 60
         return hours + minutes + int(duration_split[2])
