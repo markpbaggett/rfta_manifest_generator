@@ -1,0 +1,47 @@
+# This metadata mapping follows the IIIF Presentation v.3 specification.  It is written in YAML rather than a
+# spreadsheet for ease of conversion and so that there are no suprises between the developers and metadata librarians.
+
+
+# The top level resource in the response must have the @context property, and it should appear as the very first
+# key/value pair of the JSON representation. This tells Linked Data processors how to interpret the document. The value
+# of the @context property must be either the URI http://iiif.io/api/presentation/3/context.json or a JSON array with
+# the URI http://iiif.io/api/presentation/3/context.json as the last item.
+"@context": http://iiif.io/api/presentation/3/context.json
+id: https://Unique-URI-Preferably-to-Location-Of-Manifest
+type: Manifest
+
+label:
+  en:
+    - "[Title (Interview with [Name], [Date])]"
+
+rights: "[License]"
+
+summary:
+  en:
+    - "[Abstract]"
+
+metadata:
+  - label:
+      en:
+      - "Narrators"
+    value:
+      en:
+      - "[Narrator Name #]"
+  - label:
+      en:
+      - "Interviewers"
+    value:
+      en:
+      - "[Interviewer Name]"
+  - label:
+      en:
+      - "Location Recorded"
+    value:
+      en:
+      - "[Location Recorded]"
+  - label:
+      en:
+      - "Narrator Location Recorded"
+    value:
+      en:
+      - "[Narrator Location Recorded]"
