@@ -167,6 +167,34 @@ class Interview:
         else:
             return {}
 
+    def get_chapters(self):
+        """Build chapters from CSV metadata."""
+        canvas_id = (
+            "https://digital.lib.utk.edu/collections/islandora/PID/datastream/PROXY"
+        )
+        keys = [
+            key
+            for key, value in self.csv_data.items()
+            if key.startswith("Chapter_") and "TC" not in key
+        ]
+        chapters = [
+            (self.csv_data[key], self.csv_data[f"{key}_TC"])
+            for key in keys
+            if self.csv_data[key].rstrip() != ""
+        ]
+        if len(chapters) > 0:
+            return {
+                "type": "Range",
+                "id": canvas_id,
+                "label": {"en": ["Chapters"]},
+                "items": [
+                    MediaFragment(chapter, canvas_id).build_range()
+                    for chapter in chapters
+                ],
+            }
+        else:
+            return {}
+
     def __generate_interview(self):
         return {
             "label": self.get_interview_label(),
@@ -182,6 +210,7 @@ class Interview:
             "places": self.get_places(),
             "names": self.get_names(),
             "interview question": self.get_interview_questions(),
+            "chapters": self.get_chapters(),
         }
 
 
@@ -202,4 +231,4 @@ class MediaFragment:
 
 
 if __name__ == "__main__":
-    print(MetadataReader("data/metadata.csv").interviews[1])
+    print(MetadataReader("data/metadata.csv").interviews[-2])
